@@ -1,0 +1,18 @@
+<%- include("partials/_header") %>
+<body>
+    <%- include("partials/_navbar") %>
+    <main class="register">
+        <h1>Login</h1>
+        <form class="register__form" action="users/login" method="POST">
+            <div class="register__form__control">
+                <input type="text" name="username" placeholder="Username">
+            </div>
+            <div class="register__form__control">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <div class="register__form__button">
+                <button>Login</button>
+            </div>
+        </form>
+    </main>
+</body>

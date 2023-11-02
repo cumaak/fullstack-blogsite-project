@@ -1,0 +1,12 @@
+<aside class="right-side">
+    <h2>Newest Blogs</h2>
+    <% for (blog of newestBlogs) { %>
+        <div class="newest-blogs">
+            <div class="newest-blogs__user">
+                <span class="newest-blogs__user__image"><i class="fa-solid fa-user"></i></span>
+                <span class="newest-blogs__user__name"><a href="/users/<%= blog.author._id %>"><%= blog.author.username %></a></span>
+            </div>
+            <h3 class="newest-blogs__title"><a href="/blogs/<%= blog._id %>"><%= blog.title+"..." %></a></h3>
+        </div>
+    <% } %>
+</aside>

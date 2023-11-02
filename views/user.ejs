@@ -1,0 +1,72 @@
+<%- include("partials/_header") %>
+<body>
+    <%- include("partials/_navbar") %>
+    <main>
+        <%- include("partials/_left-side") %>
+        <section>
+            <div class="profile-card">
+                <span class="profile-card__image"><i class="fa-solid fa-user"></i></span>
+                <h2 class="profile-card__username"><a href="/users/<%= author.username %>"><%= author.username %></a></h2>
+                <div class="profile-card__follow-number">
+                    <div class="profile-card__follow-number__followers">
+                        <span class="profile-card__follow-number__followers__button" id="followers-button"><%= author.followers.length %></span>
+                        <span>Followers</span>
+                        <div class="follow-list" id="followers-list">
+                            <span class="follow-list__close-btn" id="followers-close-button"><i class="fa-solid fa-xmark"></i></span>
+                            <% for (follower of author.followers) { %>
+                                <div class="follow-list__user">
+                                    <span class="follow-list__user__image"><i class="fa-solid fa-user"></i></span>
+                                    <span class="follow-list__user__name"><a href="/users/<%= follower._id %>"><%= follower.username %></a></span>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="profile-card__follow-number__followers">
+                        <span class="profile-card__follow-number__followers__button" id="followings-button"><%= author.followings.length %></span>
+                        <span>Followings</span>
+                        <div class="follow-list" id="followings-list">
+                            <span class="follow-list__close-btn" id="followings-close-button"><i class="fa-solid fa-xmark"></i></span>
+                            <% for (following of author.followings) { %>
+                                <div class="follow-list__user">
+                                    <span class="follow-list__user__image"><i class="fa-solid fa-user"></i></span>
+                                    <span class="follow-list__user__name"><a href="/users/<%= following._id %>"><%= following.username %></a></span>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                    <% if(!inFollowers) { %>
+                        <a class="profile-card__follow-button" href="/users/<%= author._id %>/follow?_method=PUT"><button>Follow</button></a>
+                    <% } else { %>
+                        <a class="profile-card__follow-button" href="/users/<%= author._id %>/unfollow?_method=PUT"><button>Unfollow</button></a>
+                    <% } %>
+            </div>
+            <%- include("partials/_blog-card") %>
+        </section>
+        <%- include("partials/_right-side") %>
+    </main>
+    <%- include("partials/_footer") %>
+    
+    
+    <script>
+        const followingsButton = document.querySelector("#followings-button")
+        const followingsList = document.querySelector("#followings-list")
+        const followingsCloseButton = document.querySelector("#followings-close-button")
+        const followersButton = document.querySelector("#followers-button")
+        const followersList = document.querySelector("#followers-list")
+        const followersCloseButton = document.querySelector("#followers-close-button")
+
+        followingsButton.addEventListener("click", () => {
+            followingsList.style.display = "flex"
+        })
+        followingsCloseButton.addEventListener("click", () => {
+            followingsList.style.display = "none"
+        })
+        followersButton.addEventListener("click", () => {
+            followersList.style.display = "flex"
+        })
+        followersCloseButton.addEventListener("click", () => {
+            followersList.style.display = "none"
+        })
+    </script>
+</body>

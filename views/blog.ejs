@@ -1,0 +1,96 @@
+<%- include("partials/_header") %>
+
+    <body>
+        <%- include("partials/_navbar") %>
+        <main class="main">
+                <%- include("partials/_left-side") %>
+                    <section>
+                        <article class="blog">
+                            <div class="blog__user">
+                                <span class="blog__user__image"><i class="fa-solid fa-user"></i></span>
+                                <a href="/users/<%= blog.author._id %>"><%= blog.author.username %></a>
+                            </div>
+                            <span class="blog__date"><%= blog.uploadedAt.toDateString() %></span>
+                            <div class="blog__favs">
+                                <% if (!isFav) { %>
+                                    <a href="/blogs/<%= blog._id %>/favBlog?_method=PUT">
+                                        <i class="fa-regular fa-heart" style="color: red;"></i>
+                                    </a>
+                                    <span class="blog__favs__count" id="favs-button"><%= blog.favs.length %></span>
+                                <% } else { %>
+                                        <a href="/blogs/<%= blog._id %>/unfavBlog?_method=PUT">
+                                            <i class="fa-solid fa-heart" style="color: red;"></i>
+                                        </a>
+                                        <span class="blog__favs__count" id="favs-button"><%= blog.favs.length %></span>
+                                <% } %>
+                                <div class="favs-list" id="favs-list">
+                                    <span class="favs-list__close-btn" id="favs-close-button"><i class="fa-solid fa-xmark"></i></span>
+                                    <% for (fav of blog.favs) { %>
+                                        <div class="favs-list__user">
+                                            <span class="favs-list__user__image"><i class="fa-solid fa-user"></i></span>
+                                            <span class="favs-list__user__name"><a href="/users/<%= fav._id %>"><%= fav.username %></a></span>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <h1 class="blog__title"><%= blog.title %></h1>
+                            <p class="blog__content"><%= blog.content %></p>
+                            <span class="blog__author">author: <a href="/users/<%= blog.author._id %>"><%= blog.author.username %></a></span>
+                            <div class="blog__blog-options">
+                                <% if (blog.author._id==user.id) { %>
+                                    <a href="/blogs/<%= blog._id %>?_method=DELETE"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="/blogs/<%= blog._id %>/edit-blog"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <% if (!isHidden) { %>
+                                        <a href="/blogs/<%= blog._id %>/hideBlog?_method=PUT"><i class="fa-solid fa-eye-slash"></i></a>
+                                    <% } else { %>
+                                        <a href="/blogs/<%= blog._id %>/unhideBlog?_method=PUT"><i class="fa-solid fa-eye"></i></a>
+                                    <% } %>
+                                <% } %>
+                            </div>
+                            
+                            <div class="blog__comments">
+                                <h3>Comments</h3>
+                                <% for (comment of blog.comments) { %>
+                                    <div class="blog__comment">
+                                        <div class="blog__comment__user">
+                                            <span class="blog__comment__user__image">
+                                                <i class="fa-solid fa-user"></i>
+                                            </span>
+                                            <a href="/users/<%= comment.user._id %>"><%= comment.user.username %></a>
+                                            <p class="blog__comment__date"><%= comment.uploadedAt.toDateString() %></p>
+                                        </div>
+                                        <p class="blog__comment__body"><%= comment.body %></p>
+                                        
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="blog__add-comment">
+                                <form method="POST" action="/blogs/<%= blog._id %>/add-comment?_method=PUT">
+                                    <div class="blog__add-comment__textarea">
+                                        <textarea name="comment" placeholder="Add comment"></textarea>
+                                    </div>
+                                    <div class="blog__add-comment__button">
+                                        <button>Add comment</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </article>
+                    </section>
+                <%- include("partials/_right-side") %>
+        </main>
+        <%- include("partials/_footer") %>
+
+        <script>
+            const favsButton = document.querySelector("#favs-button")
+            const favsList = document.querySelector("#favs-list")
+            const favsCloseButton = document.querySelector("#favs-close-button")
+
+            favsButton.addEventListener("click", ()=>{
+                favsList.style.display = "flex"
+            })
+            favsCloseButton.addEventListener("click", ()=>{
+                favsList.style.display = "none"
+            })
+        </script>
+    </body>

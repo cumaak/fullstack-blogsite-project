@@ -1,0 +1,25 @@
+<%- include("partials/_header") %>
+<body>
+    <%- include("partials/_navbar") %>
+    <main class="new-blog">
+        <form method="POST" action="/blogs/<%= blog._id %>/edit-blog?_method=PUT">
+            <div class="new-blog__category">
+                <select name="category">
+                    <option value="" selected disabled hidden>Choose category</option>
+                    <% for (category of categories) { %>
+                        <option value="<%= category.name %>"><%= category.name %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="new-blog__title">
+                <input value="<%= blog.title %>" type="text" name="title" placeholder="Title">
+            </div>
+            <div class="new-blog__content">
+                <textarea name="content" placeholder="Blog content" cols="30" rows="10"><%= blog.content %></textarea>
+            </div>
+            <div class="new-blog__submit-button">
+                <button>Add</button>
+            </div>
+        </form>
+    </main>
+</body>

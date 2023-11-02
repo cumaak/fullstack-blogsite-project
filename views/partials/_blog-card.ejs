@@ -1,0 +1,29 @@
+<% for (blog of blogs) { %>
+    <article class="blog-card">
+        <div class="blog-card__header">
+            <span class="blog-card__header__user-image"><i class="fa-solid fa-user"></i></span>
+            <a class="blog-card__header__username" href="/users/<%= blog.author._id %>"><%= blog.author.username %></a>
+            <span class="blog-card__header__date"><%= blog.uploadedAt.toDateString() %></span>
+        </div>
+        <h3 class="blog-card__title"><a href="/blogs/<%= blog.id %>"><%= blog.title %></a></h3>
+        <p class="blog-card__content"><%= blog.content.substr(0, Math.floor(Math.random() * 80) + 200)+"..." %> <a href="/blogs/<%= blog.id %>" style="color: blue;">more</a> </p>
+        <div class="blog-card__sub">
+            <% if (!blog.favs.includes(user._id)) { %>
+                <div class="blog-card__sub__favs">
+                    <a href="/blogs/<%= blog._id %>/favBlog?_method=PUT">
+                        <i class="fa-regular fa-heart" style="color: red;"></i>
+                    </a>
+                    <span class="blog-card__header__favs__count"><%= blog.favs.length %></span>
+                </div>
+            <% } else { %>
+                <div class="blog-card__sub__favs">
+                    <a href="/blogs/<%= blog._id %>/unfavBlog?_method=PUT">
+                        <i class="fa-solid fa-heart" style="color: red;"></i>
+                    </a>
+                    <span class="blog-card__header__favs__count"><%= blog.favs.length %></span>
+                </div>
+            <% } %>
+            <a class="blog-card__sub__category" href="/categories/<%= blog.category %>"><%= blog.category %></a>
+        </div>
+    </article>
+<% } %>

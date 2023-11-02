@@ -1,0 +1,6 @@
+<aside class="left-side">
+    <h3>Categories</h3>
+    <% for (category of categories) { %>
+        <h4><a href="/categories/<%= category.name %>"><%= category.name %></a></h4>
+    <% } %>
+</aside>
